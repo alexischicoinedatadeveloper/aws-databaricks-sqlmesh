@@ -15,5 +15,5 @@ Ended up following this guide which worked:
 https://registry.terraform.io/providers/databricks/databricks/latest/docs/guides/aws-workspace
 
 In vpc.tf we can set enable_nat_gateway = false to delete the gateway and save costs.
-It's better to do this once clusters are shut down otherwise you'll have to shut them down manually.
+It's better to do this once clusters are shut down otherwise strange things will happen.
 The next time we want to use Databricks we set it back to true and run terraform.
