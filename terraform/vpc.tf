@@ -10,7 +10,7 @@ module "vpc" {
   tags = var.tags
 
   enable_dns_hostnames = true
-  enable_nat_gateway   = false
+  enable_nat_gateway   = var.enable_nat_gateway_for_databricks_vpc
   single_nat_gateway   = true
   create_igw           = true
 
