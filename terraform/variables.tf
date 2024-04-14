@@ -1,7 +1,3 @@
-variable "client_id" {}
-variable "client_secret" {}
-variable "databricks_account_id" {}
-
 variable "tags" {
   default = {}
 }
@@ -11,8 +7,14 @@ variable "cidr_block" {
 }
 
 variable "region" {
-  default = "eu-west-1"
+  default = "us-east-1"
 }
+
+variable "databricks_account_id" {}
+variable "aws_access_key_id" {}
+variable "aws_secret_access_key" {}
+variable "databricks_terraform_account_client_id" {}
+variable "databricks_terraform_account_secret" {}
 
 resource "random_string" "naming" {
   special = false
