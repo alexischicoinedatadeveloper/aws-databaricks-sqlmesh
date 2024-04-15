@@ -22,3 +22,17 @@ variable "enable_nat_gateway_for_databricks_vpc" {
 variable "aws_account_id" {
   type = string
 }
+
+
+resource "random_string" "naming" {
+  special = false
+  upper   = false
+  length  = 6
+}
+
+locals {
+  prefix                = "demo${random_string.naming.result}"
+  metastore_name        = "${local.prefix}-metastore"
+  unity_admin_group     = "${local.prefix}-admin-group"
+  workspace_users_group = "${local.prefix}-workspace-users-group"
+}

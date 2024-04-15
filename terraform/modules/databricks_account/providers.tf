@@ -24,10 +24,3 @@ provider "databricks" {
   client_id     = var.databricks_terraform_account_client_id
   client_secret = var.databricks_terraform_account_secret
 }
-terraform {
-  backend "s3" {
-    bucket = "alexischicoinedeveloperterraform"
-    key    = "terraform_state"
-    region = "us-east-1"
-  }
-}

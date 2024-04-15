@@ -27,6 +27,7 @@ jobs:
       TF_VAR_aws_secret_access_key: ${{ secrets.TERRAFORM_USER_AWS_ACCESS_KEY_SECRET }}
       TF_VAR_databricks_terraform_account_client_id: ${{ secrets.DATABRICKS_ACCOUNT_TERRAFORM_USER_CLIENT_ID }}
       TF_VAR_databricks_terraform_account_secret: ${{ secrets.DATABRICKS_ACCOUNT_TERRAFORM_USER_SECRET }}
+      TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
