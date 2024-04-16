@@ -3,16 +3,21 @@ terraform {
     databricks = {
       source = "databricks/databricks"
     }
-    postgresql = {
-      source  = "cyrilgdn/postgresql"
-      version = "~> 1.14.0" // Specify the version based on the latest or required compatibility
-    }
   }
 }
 
 provider "databricks" {
-  alias = "mws"
+  alias         = "workspace"
+  host          = var.databricks_host
+  account_id    = var.databricks_account_id
+  client_id     = var.databricks_terraform_account_client_id
+  client_secret = var.databricks_terraform_account_secret
 }
+
 provider "databricks" {
-  alias = "workspace"
+  alias         = "mws"
+  host          = "https://accounts.cloud.databricks.com"
+  account_id    = var.databricks_account_id
+  client_id     = var.databricks_terraform_account_client_id
+  client_secret = var.databricks_terraform_account_secret
 }

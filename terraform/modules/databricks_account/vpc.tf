@@ -14,11 +14,7 @@ module "vpc" {
   single_nat_gateway   = true
   create_igw           = true
 
-  public_subnets = [
-    cidrsubnet(var.cidr_block, 3, 0)
-    ,
-    cidrsubnet(var.cidr_block, 3, 3)
-  ]
+  public_subnets = [cidrsubnet(var.cidr_block, 3, 0)]
   private_subnets = [cidrsubnet(var.cidr_block, 3, 1),
   cidrsubnet(var.cidr_block, 3, 2)]
 
@@ -29,20 +25,10 @@ module "vpc" {
     cidr_blocks = "0.0.0.0/0"
   }]
 
- default_security_group_ingress = [
-    {
-      description = "Allow all internal TCP and UDP"
-      self        = true
-    },
-    {
-      description = "Allow PostgreSQL"
-      from_port   = 5432
-      to_port     = 5432
-      protocol    = "tcp"
-      cidr_blocks = "0.0.0.0/0"
-    }
-  ]
-
+  default_security_group_ingress = [{
+    description = "Allow all internal TCP and UDP"
+    self        = true
+  }]
 }
 
 module "vpc_endpoints" {
@@ -75,16 +61,6 @@ module "vpc_endpoints" {
 
   tags = var.tags
 }
-
-resource "aws_db_subnet_group" "public_db_subnet_group" {
-  name       = "${local.prefix}-public-db-subnet-group"
-  subnet_ids = module.vpc.public_subnets
-
-  tags = {
-    Name = "My DB Subnet Group in ${local.prefix}"
-  }
-}
-
 
 resource "databricks_mws_networks" "this" {
   provider           = databricks.mws
