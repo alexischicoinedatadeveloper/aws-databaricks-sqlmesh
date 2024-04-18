@@ -9,7 +9,6 @@ variable "token" {
 variable "metastore_id" {
   type = string
 }
-
 variable "databricks_account_id" {}
 variable "databricks_terraform_account_client_id" {}
 variable "databricks_terraform_account_secret" {}
