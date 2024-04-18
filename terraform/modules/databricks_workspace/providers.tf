@@ -3,10 +3,7 @@ terraform {
     databricks = {
       source = "databricks/databricks"
     }
-    postgresql = {
-      source  = "cyrilgdn/postgresql"
-      version = "~> 1.14.0" // Specify the version based on the latest or required compatibility
-    }
+
   }
 }
 

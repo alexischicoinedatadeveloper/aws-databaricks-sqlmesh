@@ -46,3 +46,17 @@ resource "databricks_secret" "demo_data_password_secret" {
   string_value = random_password.demo_data_password.result
   scope        = databricks_secret_scope.postgres_secrets.id
 }
+
+resource "databricks_secret" "postgres_host" {
+  provider     = databricks.workspace
+  key          = "postgres_host"
+  string_value = aws_db_instance.postgres_for_databricks.address
+  scope        = databricks_secret_scope.postgres_secrets.id
+}
+
+resource "databricks_secret" "postgres_port" {
+  provider     = databricks.workspace
+  key          = "postgres_port"
+  string_value = aws_db_instance.postgres_for_databricks.port
+  scope        = databricks_secret_scope.postgres_secrets.id
+}

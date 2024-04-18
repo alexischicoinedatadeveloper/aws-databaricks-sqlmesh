@@ -29,7 +29,7 @@ module "vpc" {
     cidr_blocks = "0.0.0.0/0"
   }]
 
- default_security_group_ingress = [
+  default_security_group_ingress = [
     {
       description = "Allow all internal TCP and UDP"
       self        = true

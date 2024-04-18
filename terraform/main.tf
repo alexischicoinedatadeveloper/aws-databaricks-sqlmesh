@@ -11,8 +11,7 @@ terraform {
       source = "databricks/databricks"
     }
     postgresql = {
-      source  = "cyrilgdn/postgresql"
-      version = "~> 1.14.0" // Specify the version based on the latest or required compatibility
+      source = "cyrilgdn/postgresql"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -48,7 +47,7 @@ module "databricks_account" {
   aws_account_id                         = var.aws_account_id
 
   providers = {
-    aws = aws
+    aws            = aws
     databricks.mws = databricks.mws
   }
 }
@@ -60,16 +59,6 @@ provider "databricks" {
   client_id     = var.databricks_terraform_account_client_id
   client_secret = var.databricks_terraform_account_secret
 }
-# provider "postgresql" {
-#   host            = aws_db_instance.postgres_for_databricks.address
-#   scheme          = "awspostgres"
-#   port            = 5432
-#   username        = databricks_secret.postgres_admin_user.string_value
-#   password        = databricks_secret.postgres_admin_password.string_value
-#   sslmode         = "require"
-#   connect_timeout = 15
-#   superuser       = false
-# }
 
 module "databricks_workspace" {
   source                                 = "./modules/databricks_workspace"
@@ -91,4 +80,25 @@ module "databricks_workspace" {
     databricks.workspace = databricks.workspace
     databricks.mws       = databricks.mws
   }
+}
+provider "postgresql" {
+  host            = module.databricks_workspace.postgres_host
+  scheme          = "awspostgres"
+  port            = 5432
+  username        = module.databricks_workspace.postgres_admin_user
+  password        = module.databricks_workspace.postgres_admin_password
+  sslmode         = "require"
+  connect_timeout = 15
+  superuser       = false
+}
+
+module "postgres" {
+  source = "./modules/postgres"
+  providers = {
+    postgresql = postgresql
+  }
+  sqlmesh_state_user_secret     = module.databricks_workspace.sqlmesh_state_user_secret
+  sqlmesh_state_password_secret = module.databricks_workspace.sqlmesh_state_password_secret
+  demo_data_user_secret         = module.databricks_workspace.demo_data_user_secret
+  demo_data_password_secret     = module.databricks_workspace.demo_data_password_secret
 }
