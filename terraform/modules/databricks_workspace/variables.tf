@@ -6,6 +6,18 @@ variable "token" {
   sensitive = true
 }
 
+variable "github_user" {
+  type = string
+}
+
+variable "github_token" {
+  type      = string
+  sensitive = true
+}
+variable "workspace_repo_path" {
+  type = string
+}
+
 variable "metastore_id" {
   type = string
 }

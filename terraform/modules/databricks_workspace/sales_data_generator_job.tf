@@ -39,14 +39,8 @@ resource "databricks_access_control_rule_set" "sales_data_generator_acl" {
   }
 }
 
-resource "databricks_notebook" "sales_data_generator" {
-  provider = databricks.workspace
-  source   = "${path.module}/../../../notebooks/postgres_data_generation/sales_data_generator.py"
-  path     = "/Shared/postgres_data_generation/sales_data_generator"
-}
-
 resource "databricks_job" "sales_data_generator_job" {
-  depends_on  = [databricks_access_control_rule_set.sales_data_generator_acl]
+  depends_on  = [databricks_access_control_rule_set.sales_data_generator_acl, null_resource.update_databricks_repo]
   provider    = databricks.workspace
   name        = "Sales data generator"
   description = "This jobs add data in the postgres database."
@@ -78,10 +72,9 @@ resource "databricks_job" "sales_data_generator_job" {
     job_cluster_key = "j"
 
     notebook_task {
-      notebook_path = databricks_notebook.sales_data_generator.path
+      notebook_path = "${databricks_repo.this.path}/notebooks/postgres_data_generation/sales_data_generator"
     }
   }
-
   run_as {
     service_principal_name = databricks_service_principal.sales_data_generator_sp.application_id
   }

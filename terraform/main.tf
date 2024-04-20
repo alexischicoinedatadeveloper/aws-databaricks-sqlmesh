@@ -61,6 +61,7 @@ provider "databricks" {
 }
 
 module "databricks_workspace" {
+  depends_on                             = [module.databricks_account]
   source                                 = "./modules/databricks_workspace"
   host                                   = module.databricks_account.databricks_host
   token                                  = module.databricks_account.databricks_token
@@ -74,8 +75,10 @@ module "databricks_workspace" {
   subnet_id                              = module.databricks_account.subnet_id
   security_group_id                      = module.databricks_account.security_group_id
   subnet_group_name                      = module.databricks_account.subnet_group_name
+  github_user                            = var.github_user
+  github_token                           = var.github_token
+  workspace_repo_path                    = var.workspace_repo_path
 
-  depends_on = [module.databricks_account]
   providers = {
     databricks.workspace = databricks.workspace
     databricks.mws       = databricks.mws

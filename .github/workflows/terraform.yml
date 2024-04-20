@@ -28,11 +28,21 @@ jobs:
       TF_VAR_databricks_terraform_account_client_id: ${{ secrets.DATABRICKS_ACCOUNT_TERRAFORM_USER_CLIENT_ID }}
       TF_VAR_databricks_terraform_account_secret: ${{ secrets.DATABRICKS_ACCOUNT_TERRAFORM_USER_SECRET }}
       TF_VAR_aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+      TF_VAR_workspace_repo_path: ${{ vars.WORKSPACE_REPO_PATH }}
+      TF_VAR_github_token: ${{ secrets.TOKEN_GITHUB }}
+      TF_VAR_github_user: ${{ secrets.USER_GITHUB }}
 
     steps:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        # Version range or exact version of a Python version to use, using SemVer's version range syntax.
+        python-version: 3.8
+
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
