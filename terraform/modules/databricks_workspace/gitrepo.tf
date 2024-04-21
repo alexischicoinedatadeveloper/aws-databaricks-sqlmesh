@@ -40,7 +40,7 @@ resource "null_resource" "update_databricks_repo" {
       export DATABRICKS_TOKEN="${databricks_obo_token.this.token_value}"
       export DATABRICKS_HOST="${var.databricks_host}"
       databricks configure --token --profile workspace_repo_update
-      databricks --profile workspace_repo_update repos update "${databricks_repo.this.path}" --branch "main" &> /tmp/databricks_repos_update.log
+      databricks --profile workspace_repo_update repos update "${databricks_repo.this.path}" --branch "main"
       unset DATABRICKS_TOKEN
       unset DATABRICKS_HOST
 EOF
