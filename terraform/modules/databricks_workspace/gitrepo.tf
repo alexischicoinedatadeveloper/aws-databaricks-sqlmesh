@@ -22,6 +22,7 @@ resource "databricks_git_credential" "sp" {
   force                 = true
 }
 
+
 resource "databricks_obo_token" "this" {
   provider         = databricks.workspace
   application_id   = var.databricks_terraform_account_client_id
@@ -29,6 +30,7 @@ resource "databricks_obo_token" "this" {
 }
 
 resource "null_resource" "update_databricks_repo" {
+  depends_on = [databricks_obo_token.this]
   triggers = {
     always_run = timestamp()
   }
