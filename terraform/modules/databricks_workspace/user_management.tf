@@ -65,3 +65,10 @@ resource "databricks_mws_permission_assignment" "add_admin_group" {
     time_sleep.wait_for_permission_apis
   ]
 }
+
+resource "databricks_grant" "admin_metastore_grants" {
+  provider   = databricks.workspace
+  metastore  = var.metastore_id
+  principal  = databricks_group.admin_group.display_name
+  privileges = ["CREATE_CATALOG"]
+}
