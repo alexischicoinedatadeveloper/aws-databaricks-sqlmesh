@@ -37,8 +37,12 @@ resource "null_resource" "update_databricks_repo" {
   provisioner "local-exec" {
     command     = <<EOF
       pip install databricks-cli
-      databricks configure --host "${var.databricks_host}" --token --profile workspace_repo_update <<< "${databricks_obo_token.this.token_value}"
+      export DATABRICKS_TOKEN="${databricks_obo_token.this.token_value}"
+      export DATABRICKS_HOST="${var.databricks_host}"
+      databricks configure --token --profile workspace_repo_update
       databricks --profile workspace_repo_update repos update "${databricks_repo.this.path}" --branch "main" &> /tmp/databricks_repos_update.log
+      unset DATABRICKS_TOKEN
+      unset DATABRICKS_HOST
 EOF
     interpreter = ["/bin/bash", "-c"]
   }
