@@ -28,12 +28,12 @@ variable "workspace_id" {}
 
 variable "databricks_users" {
   type    = list(any)
-  default = ["alexischicoinedatadeveloper@gmail.com"]
+  default = ["alexisdatabricksmay2024@outlook.com"]
 }
 
 variable "databricks_metastore_admins" {
   type    = list(any)
-  default = ["alexischicoinedatadeveloper@gmail.com"]
+  default = ["alexisdatabricksmay2024@outlook.com"]
 }
 
 variable "databricks_host" {
