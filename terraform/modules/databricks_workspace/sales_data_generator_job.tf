@@ -6,16 +6,6 @@ resource "databricks_service_principal" "sales_data_generator_sp" {
   databricks_sql_access      = false
   allow_instance_pool_create = false
 }
-resource "databricks_permissions" "pool_usage" {
-  provider         = databricks.workspace
-  instance_pool_id = databricks_instance_pool.smallest_nodes.id
-
-  access_control {
-    service_principal_name = databricks_service_principal.sales_data_generator_sp.application_id
-    permission_level       = "CAN_ATTACH_TO"
-  }
-
-}
 
 data "databricks_service_principal" "terraform_user" {
   provider       = databricks.workspace

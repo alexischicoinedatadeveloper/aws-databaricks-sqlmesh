@@ -21,6 +21,20 @@ resource "databricks_group" "users" {
   depends_on   = [databricks_group.admin_group]
 }
 
+resource "databricks_group" "postgres_connection_owners" {
+  provider     = databricks.mws
+  display_name = "postgres_connection_owners"
+}
+
+resource "databricks_group_member" "postgres_connection_owners_group_member" {
+  provider  = databricks.mws
+  for_each  = toset([databricks_group.admin_group.id, databricks_service_principal.upstream_sp.id])
+  group_id  = databricks_group.postgres_connection_owners.id
+  member_id = each.value
+  depends_on = [
+    databricks_group_member.admin_group_member
+  ]
+}
 
 resource "databricks_group_member" "admin_group_member" {
   provider  = databricks.mws
