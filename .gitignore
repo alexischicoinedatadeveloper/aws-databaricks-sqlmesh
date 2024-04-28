@@ -5,3 +5,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/random/3.6.0/darw
 /terraform/modules/databricks_account/.terraform
 /sqlmesh/seeds_for_local/logs
 /sqlmesh/upstream/.cache
+/sqlmesh/upstream/logs
