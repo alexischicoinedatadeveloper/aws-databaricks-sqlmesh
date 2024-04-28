@@ -37,7 +37,7 @@ resource "databricks_job" "upstream_job" {
     job_cluster_key = "j"
     new_cluster {
       data_security_mode = "SINGLE_USER"
-      runtime_engine     = "STANDARD" # don't need photon to run regular python code
+      runtime_engine     = "PHOTON"
       num_workers        = 0
       instance_pool_id   = databricks_instance_pool.smallest_nodes.id
       spark_version      = data.databricks_spark_version.latest_photon.id
