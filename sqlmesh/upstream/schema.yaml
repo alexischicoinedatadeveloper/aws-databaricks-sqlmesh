@@ -1,0 +1,13 @@
+- name: '`postgres_demo_sales_data`.`sales`.`item_info`'
+  columns:
+    item_id: BIGINT
+    item_name: STRING
+    item_description: STRING
+    price: DOUBLE
+- name: '`postgres_demo_sales_data`.`sales`.`transactions`'
+  columns:
+    transaction_id: BIGINT
+    item_id: BIGINT
+    quantity: BIGINT
+    transaction_date: STRING
+    total_price: DOUBLE

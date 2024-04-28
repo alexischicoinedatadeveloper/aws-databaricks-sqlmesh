@@ -1,0 +1,15 @@
+gateways:
+    local:
+        connection:
+            type: duckdb
+            catalogs:
+                postgres_demo_sales_data: demo_data.db
+        state_connection:
+            type: duckdb
+            catalogs:
+                seed_state: state.db
+
+default_gateway: local
+
+model_defaults:
+    dialect: databricks
