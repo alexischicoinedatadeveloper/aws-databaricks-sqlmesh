@@ -7,6 +7,23 @@ resource "aws_s3_bucket" "root_storage_bucket" {
   })
 }
 
+resource "aws_s3_bucket_lifecycle_configuration" "root_storage_bucket" {
+  bucket = aws_s3_bucket.root_storage_bucket.bucket
+
+  rule {
+    id     = "root_storage_bucket"
+    status = "Enabled"
+
+    transition {
+      storage_class = "INTELLIGENT_TIERING"
+    }
+
+    noncurrent_version_transition {
+      storage_class = "INTELLIGENT_TIERING"
+    }
+  }
+}
+
 resource "aws_s3_bucket_server_side_encryption_configuration" "root_storage_bucket" {
   bucket = aws_s3_bucket.root_storage_bucket.bucket
 

@@ -12,6 +12,10 @@ resource "databricks_permissions" "repo_usage" {
     permission_level       = "CAN_READ"
     service_principal_name = databricks_service_principal.sales_data_generator_sp.application_id
   }
+  access_control {
+    permission_level       = "CAN_MANAGE"
+    service_principal_name = databricks_service_principal.upstream_sp.application_id
+  }
 }
 
 resource "databricks_git_credential" "sp" {

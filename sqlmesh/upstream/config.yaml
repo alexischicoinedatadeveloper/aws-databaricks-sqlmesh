@@ -1,0 +1,32 @@
+gateways:
+    local:
+        connection:
+            type: duckdb
+            catalogs:
+                postgres_demo_sales_data: "../seeds_for_local/demo_data.db"
+                sales: sales.db
+        state_connection:
+            type: duckdb
+            catalogs:
+                upstream_state: state.db
+    db_notebook:
+        connection:
+            type: databricks
+            catalog: dev
+            concurrent_tasks: 4
+            access_token: "a_token"
+            server_hostname: "a_host"
+            http_path: "a_path"
+        state_connection:
+            type: postgres
+            database: sqlmesh_state
+            host: {{ env_var('POSTGRES_HOST')}}
+            port: {{ env_var('POSTGRES_PORT')}}
+            user: {{ env_var('POSTGRES_USER')}}
+            password: {{ env_var('POSTGRES_PASSWORD')}}
+
+default_gateway: local
+
+model_defaults:
+    dialect: databricks
+    cron: "*/5 * * * *"

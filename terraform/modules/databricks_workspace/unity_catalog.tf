@@ -20,12 +20,14 @@ resource "databricks_connection" "postgres_sales" {
   provider        = databricks.workspace
   name            = "postgres_demo_sales_data"
   connection_type = "POSTGRESQL"
+  owner           = databricks_group.postgres_connection_owners.display_name
   options = {
     host     = aws_db_instance.postgres_for_databricks.address
     port     = aws_db_instance.postgres_for_databricks.port
     user     = databricks_secret.demo_data_user_secret.string_value
     password = databricks_secret.demo_data_password_secret.string_value
   }
+  depends_on = [databricks_group_member.postgres_connection_owners_group_member]
 }
 
 resource "databricks_grant" "postgres_connection_admins" {
@@ -62,10 +64,38 @@ resource "databricks_grants" "postgres_catalog" {
     principal  = databricks_service_principal.sales_data_generator_sp.application_id
     privileges = ["USE_CATALOG", "USE_SCHEMA", "SELECT"]
   }
+  grant {
+    principal  = databricks_service_principal.upstream_sp.application_id
+    privileges = ["USE_CATALOG", "USE_SCHEMA", "SELECT"]
+  }
 
   depends_on = [
     databricks_mws_permission_assignment.add_user_group, databricks_catalog.postgres_sales
   ]
+
+}
+
+resource "databricks_catalog" "sales" {
+  provider = databricks.workspace
+  owner    = databricks_group.admin_group.display_name
+  name     = "sales"
+  depends_on = [
+    databricks_mws_permission_assignment.add_admin_group,
+    databricks_group.users
+  ]
+}
+
+resource "databricks_grants" "sales_catalog_grants" {
+  provider = databricks.workspace
+  catalog  = databricks_catalog.sales.name
+  grant {
+    principal  = databricks_group.users.display_name
+    privileges = ["USE_CATALOG", "USE_SCHEMA", "SELECT"]
+  }
+  grant {
+    principal  = databricks_service_principal.upstream_sp.application_id
+    privileges = ["USE_CATALOG", "USE_SCHEMA", "CREATE_SCHEMA", "CREATE_TABLE", "SELECT", "MODIFY"]
+  }
 
 }
 

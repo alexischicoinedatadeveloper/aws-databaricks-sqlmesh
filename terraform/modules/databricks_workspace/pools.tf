@@ -20,3 +20,18 @@ resource "databricks_instance_pool" "smallest_nodes" {
   preloaded_spark_versions              = [data.databricks_spark_version.latest_photon.id]
 
 }
+
+resource "databricks_permissions" "pool_usage" {
+  provider         = databricks.workspace
+  instance_pool_id = databricks_instance_pool.smallest_nodes.id
+
+  access_control {
+    service_principal_name = databricks_service_principal.sales_data_generator_sp.application_id
+    permission_level       = "CAN_ATTACH_TO"
+  }
+  access_control {
+    service_principal_name = databricks_service_principal.upstream_sp.application_id
+    permission_level       = "CAN_ATTACH_TO"
+  }
+
+}
