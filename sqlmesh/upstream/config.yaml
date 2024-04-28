@@ -12,7 +12,7 @@ gateways:
     db_notebook:
         connection:
             type: databricks
-            catalog: dev
+            catalog: sales
             concurrent_tasks: 4
             access_token: "a_token"
             server_hostname: "a_host"
