@@ -10,3 +10,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/random/3.6.0/darw
 *.db
 *.wal
 /sqlmesh/downstream/.cache
+*.log
