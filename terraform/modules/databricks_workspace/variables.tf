@@ -72,11 +72,15 @@ resource "random_password" "postgres_admin_pw" {
   length           = 20
 }
 
+data "external" "yaml_tables" {
+  program = ["python", "${path.module}/parse_sqlmesh_external_models.py", "${path.root}/../sqlmesh/downstream/schema.yaml"]
+}
 locals {
-  prefix                = "demo${random_string.naming.result}"
-  metastore_name        = "${local.prefix}-metastore"
-  unity_admin_group     = "${local.prefix}-admin-group"
-  workspace_users_group = "${local.prefix}-workspace-users-group"
+  prefix                     = "demo${random_string.naming.result}"
+  metastore_name             = "${local.prefix}-metastore"
+  unity_admin_group          = "${local.prefix}-admin-group"
+  workspace_users_group      = "${local.prefix}-workspace-users-group"
+  downstream_external_models = toset(jsondecode(data.external.yaml_tables.result["tables"])) # for table update trigger but it's not supported yet
 }
 
 resource "random_string" "sqlmesh_state_user" {
@@ -106,3 +110,5 @@ resource "random_password" "demo_data_password" {
   upper            = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
+
+

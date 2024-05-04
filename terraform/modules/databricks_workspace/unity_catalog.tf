@@ -27,7 +27,7 @@ resource "databricks_connection" "postgres_sales" {
     user     = databricks_secret.demo_data_user_secret.string_value
     password = databricks_secret.demo_data_password_secret.string_value
   }
-  depends_on = [databricks_group_member.postgres_connection_owners_group_member]
+  depends_on = [databricks_group_member.postgres_connection_owners_admin, databricks_group_member.postgres_connection_owners_upstream, databricks_group_member.postgres_connection_owners_downstream]
 }
 
 resource "databricks_grant" "postgres_connection_admins" {
@@ -68,6 +68,10 @@ resource "databricks_grants" "postgres_catalog" {
     principal  = databricks_service_principal.upstream_sp.application_id
     privileges = ["USE_CATALOG", "USE_SCHEMA", "SELECT"]
   }
+  grant {
+    principal  = databricks_service_principal.downstream_sp.application_id
+    privileges = ["USE_CATALOG", "USE_SCHEMA", "SELECT"]
+  }
 
   depends_on = [
     databricks_mws_permission_assignment.add_user_group, databricks_catalog.postgres_sales
@@ -94,6 +98,10 @@ resource "databricks_grants" "sales_catalog_grants" {
   }
   grant {
     principal  = databricks_service_principal.upstream_sp.application_id
+    privileges = ["USE_CATALOG", "USE_SCHEMA", "CREATE_SCHEMA", "CREATE_TABLE", "SELECT", "MODIFY"]
+  }
+  grant {
+    principal  = databricks_service_principal.downstream_sp.application_id
     privileges = ["USE_CATALOG", "USE_SCHEMA", "CREATE_SCHEMA", "CREATE_TABLE", "SELECT", "MODIFY"]
   }
 

@@ -33,5 +33,9 @@ resource "databricks_permissions" "pool_usage" {
     service_principal_name = databricks_service_principal.upstream_sp.application_id
     permission_level       = "CAN_ATTACH_TO"
   }
+  access_control {
+    service_principal_name = databricks_service_principal.downstream_sp.application_id
+    permission_level       = "CAN_ATTACH_TO"
+  }
 
 }

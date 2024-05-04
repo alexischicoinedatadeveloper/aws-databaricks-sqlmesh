@@ -26,16 +26,25 @@ resource "databricks_group" "postgres_connection_owners" {
   display_name = "postgres_connection_owners"
 }
 
-resource "databricks_group_member" "postgres_connection_owners_group_member" {
+resource "databricks_group_member" "postgres_connection_owners_admin" {
   provider  = databricks.mws
-  for_each  = toset([databricks_group.admin_group.id, databricks_service_principal.upstream_sp.id])
   group_id  = databricks_group.postgres_connection_owners.id
-  member_id = each.value
+  member_id = databricks_group.admin_group.id
   depends_on = [
     databricks_group_member.admin_group_member
   ]
 }
 
+resource "databricks_group_member" "postgres_connection_owners_upstream" {
+  provider  = databricks.mws
+  group_id  = databricks_group.postgres_connection_owners.id
+  member_id = databricks_service_principal.upstream_sp.id
+}
+resource "databricks_group_member" "postgres_connection_owners_downstream" {
+  provider  = databricks.mws
+  group_id  = databricks_group.postgres_connection_owners.id
+  member_id = databricks_service_principal.downstream_sp.id
+}
 resource "databricks_group_member" "admin_group_member" {
   provider  = databricks.mws
   for_each  = toset(var.databricks_metastore_admins)
