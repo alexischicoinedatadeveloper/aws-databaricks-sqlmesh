@@ -1,11 +1,20 @@
+"""Generate sales data and populate a PostgreSQL database with it."""
+
 # Databricks notebook source
+# COMMAND
 # MAGIC %md
 # MAGIC # Install library for postgres
+# Install psycopg2 library to connect to PostgreSQL
+# MAGIC %pip install psycopg2-binary
 
 # COMMAND ----------
+import datetime
+import random
+import psycopg2
+from databricks.sdk import WorkspaceClient
 
-# Install psycopg2 library to connect to PostgreSQL
-%pip install psycopg2-binary
+# COMMAND ----------
+dbutils = WorkspaceClient.dbutils
 
 # COMMAND ----------
 
@@ -14,8 +23,11 @@
 
 # COMMAND ----------
 
-scope_name = "postgres_secrets"
-demo_data_user, demo_data_password, postgres_host, postgres_port = [dbutils.secrets.get(scope_name, i_key) for i_key in ["demo_data_user", "demo_data_password", "postgres_host", "postgres_port"]]
+SCOPE_NAME = "postgres_secrets"
+demo_data_user, demo_data_password, postgres_host, postgres_port = [
+    dbutils.secrets.get(SCOPE_NAME, i_key)
+    for i_key in ["demo_data_user", "demo_data_password", "postgres_host", "postgres_port"]
+]
 
 # COMMAND ----------
 
@@ -24,15 +36,10 @@ demo_data_user, demo_data_password, postgres_host, postgres_port = [dbutils.secr
 
 # COMMAND ----------
 
-import psycopg2
 
 # Establishing a connection to the database
 conn = psycopg2.connect(
-    database="demo_data",
-    user=demo_data_user,
-    password=demo_data_password,
-    host=postgres_host,
-    port=postgres_port
+    database="demo_data", user=demo_data_user, password=demo_data_password, host=postgres_host, port=postgres_port
 )
 
 # COMMAND ----------
@@ -48,7 +55,8 @@ cursor = conn.cursor()
 cursor.execute("CREATE SCHEMA IF NOT EXISTS sales;")
 
 # Creating a 'transactions' table within the 'sales' schema if it doesn't exist
-cursor.execute("""
+cursor.execute(
+    """
     CREATE TABLE IF NOT EXISTS sales.transactions (
         transaction_id SERIAL PRIMARY KEY,
         item_id INT NOT NULL,
@@ -56,20 +64,24 @@ cursor.execute("""
         transaction_date TIMESTAMP NOT NULL,
         total_price DECIMAL(10,2) NOT NULL
     );
-""")
+"""
+)
 
 # Creating an 'item_info' table within the 'sales' schema if it doesn't exist
-cursor.execute("""
+cursor.execute(
+    """
     CREATE TABLE IF NOT EXISTS sales.item_info (
         item_id SERIAL PRIMARY KEY,
         item_name VARCHAR(255) NOT NULL,
         item_description TEXT,
         price DECIMAL(10,2) NOT NULL
     );
-""")
+"""
+)
 
 # Adding a foreign key constraint only if it does not exist
-cursor.execute("""
+cursor.execute(
+    """
     DO $$
     BEGIN
         IF NOT EXISTS (
@@ -83,7 +95,8 @@ cursor.execute("""
         END IF;
     END
     $$;
-""")
+"""
+)
 conn.commit()
 cursor.close()
 
@@ -102,7 +115,6 @@ is_table_empty = result[0] == 0
 
 # Populate item_info table if it is empty
 if is_table_empty:
-    import random
 
     items = []
     for i in range(1, 101):
@@ -110,12 +122,15 @@ if is_table_empty:
         item_description = f"Description {i}"
         price = round(random.uniform(1, 100), 2)
         items.append((item_name, item_description, price))
-    
-    cursor.executemany("""
+
+    cursor.executemany(
+        """
         INSERT INTO sales.item_info (item_name, item_description, price)
         VALUES (%s, %s, %s);
-    """, items)
-    
+    """,
+        items,
+    )
+
     conn.commit()
 
 cursor.close()
@@ -126,9 +141,6 @@ cursor.close()
 # MAGIC # Add random transactions
 
 # COMMAND ----------
-
-import random
-import datetime
 
 # Check the existing item ids
 cursor = conn.cursor()
@@ -145,10 +157,13 @@ for i in range(10_000):
     transactions.append((item_id, quantity, transaction_date, total_price))
 
 # Insert transactions into the transactions table
-cursor.executemany("""
+cursor.executemany(
+    """
     INSERT INTO sales.transactions (item_id, quantity, transaction_date, total_price)
     VALUES (%s, %s, %s, %s);
-""", transactions)
+""",
+    transactions,
+)
 
 conn.commit()
 cursor.close()

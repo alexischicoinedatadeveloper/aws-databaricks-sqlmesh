@@ -34,12 +34,12 @@ jobs:
         shell: bash
       - name: Run CI/CD Bot Combined tests
         run: |
-          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
+          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh_projects/upstream -p ${{ github.workspace }}/sqlmesh_projects/downstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
       - name: Run CI/CD Bot Combined external models
         run: |
-          sqlmesh -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream create_external_models
-        working-directory: ${{ github.workspace }}/sqlmesh
+          sqlmesh -p ${{ github.workspace }}/sqlmesh_projects/upstream -p ${{ github.workspace }}/sqlmesh_projects/downstream create_external_models
+        working-directory: ${{ github.workspace }}/sqlmesh_projects
       - name: Run CI/CD Bot Combined plan
         run: |
-          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} gen-prod-plan
-        working-directory: ${{ github.workspace }}/sqlmesh
+          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh_projects/upstream -p ${{ github.workspace }}/sqlmesh_projects/downstream github --token ${{ secrets.GITHUB_TOKEN }} gen-prod-plan
+        working-directory: ${{ github.workspace }}/sqlmesh_projects
