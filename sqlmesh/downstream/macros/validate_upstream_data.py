@@ -34,8 +34,8 @@ def verify_upstream_models_have_needed_intervals(evaluator: MacroEvaluator) -> N
                 """
             , read=sql_strings_dialect, write=evaluator.engine_adapter.dialect)[0])[0]
             if not (start_included and end_included):
-                min_start = evaluator.engine_adapter.fetchone(f"select min(start_ts) from {upstream_object}")[0]
-                max_end = evaluator.engine_adapter.fetchone(f"select max(end_ts) from {upstream_object}")[0]
+                min_start = evaluator.engine_adapter.fetchone(f"select min(start_ts) from {upstream_identifier}")[0]
+                max_end = evaluator.engine_adapter.fetchone(f"select max(end_ts) from {upstream_identifier}")[0]
 
                 raise ValueError(
                     f"Model {upstream_object} does not have data for the interval {start} - {end}. It only has data for the interval {min_start} - {max_end}"
