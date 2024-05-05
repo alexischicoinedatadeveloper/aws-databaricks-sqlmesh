@@ -6,7 +6,7 @@ from sqlmesh.core.macros import MacroEvaluator, macro
 @macro()
 def verify_upstream_models_have_needed_intervals(evaluator: MacroEvaluator) -> None:
     sql_strings_dialect = "databricks"
-    if evaluator.runtime_stage == "evaluating":
+    if evaluator.runtime_stage == "evaluating" and evaluator.gateway != "combined":
         start = evaluator.locals["start_ts"]
         end = evaluator.locals["end_ts"]
 
