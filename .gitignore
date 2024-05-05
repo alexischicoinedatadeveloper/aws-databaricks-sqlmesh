@@ -11,3 +11,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/random/3.6.0/darw
 /sqlmesh/downstream/.cache
 *.log
 /sqlmesh_projects/downstream/.cache
+/sqlmesh_projects/upstream/.cache
