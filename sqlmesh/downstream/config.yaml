@@ -3,8 +3,7 @@ gateways:
         connection:
             type: duckdb
             catalogs:
-                postgres_demo_sales_data: "../seeds_for_local/demo_data.db"
-                sales: sales.db
+                sales: "../upstream/sales.db"
         state_connection:
             type: duckdb
             catalogs:
@@ -17,7 +16,7 @@ gateways:
             access_token: "a_token"
             server_hostname: "a_host"
             http_path: "a_path"
-        state_schema: sqlmesh_upstream
+        state_schema: sqlmesh_downstream
         state_connection:
             type: postgres
             database: sqlmesh_state
@@ -30,5 +29,4 @@ default_gateway: local
 
 model_defaults:
     dialect: databricks
-    cron: "*/5 * * * *"
-    start: 2024-04-01
+    cron: "@daily"

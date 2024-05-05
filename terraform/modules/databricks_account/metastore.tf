@@ -40,3 +40,4 @@ resource "databricks_metastore_assignment" "default_metastore" {
   metastore_id         = databricks_metastore.this.id
   default_catalog_name = "hive_metastore"
 }
+

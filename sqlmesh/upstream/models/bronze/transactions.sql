@@ -5,10 +5,32 @@ MODEL (
   )
 );
 
+WITH data AS (
+  SELECT
+    transaction_id::INT, /* pk */
+    item_id::INT, /* fk */
+    quantity::INT,
+    transaction_date::STRING,
+    total_price::DOUBLE,
+    @start_ts::TIMESTAMP AS start_ts,
+    @end_ts::TIMESTAMP AS end_ts
+  FROM postgres_demo_sales_data.sales.transactions
+)
 SELECT
-  transaction_id::INT, /* pk */
-  item_id::INT, /* fk */
-  quantity::INT,
-  transaction_date::STRING,
-  total_price::DOUBLE
-FROM postgres_demo_sales_data.sales.transactions
+  *
+FROM data
+UNION ALL
+SELECT
+  NULL::INT,
+  NULL::INT,
+  NULL::INT,
+  NULL::STRING,
+  NULL::DOUBLE,
+  @start_ts::TIMESTAMP AS start_ts,
+  @end_ts::TIMESTAMP AS end_ts
+WHERE
+  (
+    SELECT
+      COUNT(1)
+    FROM data
+  ) = 0
