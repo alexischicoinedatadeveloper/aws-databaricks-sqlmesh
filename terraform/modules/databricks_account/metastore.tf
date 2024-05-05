@@ -41,13 +41,3 @@ resource "databricks_metastore_assignment" "default_metastore" {
   default_catalog_name = "hive_metastore"
 }
 
-variable "schemas" {
-  default = ["access", "billing", "compute", "marketplace", "storage"]
-}
-
-resource "databricks_system_schema" "this" {
-  provider = databricks.mws
-  for_each = toset(var.schemas)
-
-  schema = each.value
-}
