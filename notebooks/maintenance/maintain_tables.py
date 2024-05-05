@@ -1,6 +1,5 @@
-"""Maintain tables in the specified catalogs."""
-
 # Databricks notebook source
+"""Maintain tables in the specified catalogs."""
 from databricks.connect import DatabricksSession
 from databricks.sdk import WorkspaceClient
 
