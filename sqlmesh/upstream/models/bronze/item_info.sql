@@ -8,7 +8,7 @@ MODEL (
 WITH data AS (
   SELECT
     item_id::INT, /* pk */
---     item_name::STRING,
+    item_name::STRING,
     item_description::STRING,
     price::DOUBLE,
     @start_ts::TIMESTAMP AS start_ts,
@@ -21,7 +21,7 @@ FROM data
 UNION ALL
 SELECT
   NULL::INT,
---   NULL::STRING,
+  NULL::STRING,
   NULL::STRING,
   NULL::DOUBLE,
   @start_ts::TIMESTAMP AS start_ts,
