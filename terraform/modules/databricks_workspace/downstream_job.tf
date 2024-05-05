@@ -60,9 +60,9 @@ resource "databricks_job" "downstream_job" {
     job_cluster_key = "j"
 
     notebook_task {
-      notebook_path = "${databricks_repo.this.path}/notebooks/sqlmesh/run_sqlmesh_project"
+      notebook_path = "${databricks_repo.this.path}/notebooks/sqlmesh_notebooks/run_sqlmesh_project"
       base_parameters = {
-        "sqlmesh_project_path" = "${databricks_repo.this.workspace_path}/sqlmesh/downstream"
+        "sqlmesh_project_path" = "${databricks_repo.this.workspace_path}/sqlmesh_projects/downstream"
       }
     }
   }

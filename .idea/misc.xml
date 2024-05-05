@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
-    <option name="sdkName" value="Python 3.9 (2)" />
+    <option name="cmdArguments" value="-l 120" />
+    <option name="enabledOnSave" value="true" />
+    <option name="pathToExecutable" value="$USER_HOME$/.pyenv/shims/black" />
+    <option name="sdkName" value="Python 3.10 (aws-databaricks-sqlmesh)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 virtualenv at ~/.pyenv/versions/prefect2" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (aws-databaricks-sqlmesh)" project-jdk-type="Python SDK" />
 </project>

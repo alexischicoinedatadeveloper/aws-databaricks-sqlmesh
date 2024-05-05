@@ -1,0 +1,4 @@
+[MESSAGES CONTROL]
+disable=C8920
+[FORMAT]
+max-line-length=120

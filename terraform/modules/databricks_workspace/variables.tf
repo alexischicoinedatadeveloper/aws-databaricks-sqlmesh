@@ -73,7 +73,7 @@ resource "random_password" "postgres_admin_pw" {
 }
 
 data "external" "yaml_tables" {
-  program = ["python", "${path.module}/parse_sqlmesh_external_models.py", "${path.root}/../sqlmesh/downstream/schema.yaml"]
+  program = ["python", "${path.module}/parse_sqlmesh_external_models.py", "${path.root}/../sqlmesh_projects/downstream/schema.yaml"]
 }
 locals {
   prefix                     = "demo${random_string.naming.result}"
