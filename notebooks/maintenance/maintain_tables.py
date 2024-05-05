@@ -8,7 +8,7 @@ from notebooks.maintenance.maintenance_utils import maintain_table
 # COMMAND ----------
 
 spark = DatabricksSession.builder.getOrCreate()
-dbutils = WorkspaceClient.dbutils
+dbutils = WorkspaceClient().dbutils
 
 # COMMAND ----------
 
