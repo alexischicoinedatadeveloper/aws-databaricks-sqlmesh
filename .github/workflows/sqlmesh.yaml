@@ -32,9 +32,15 @@ jobs:
       - name: Install SQLMesh + Dependencies
         run: pip install -r requirements.txt
         shell: bash
-      - name: Run CI/CD Bot Upstream
+      - name: Run CI/CD Bot Upstream tests
         run: |
           sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
-      - name: Run CI/CD Bot Downstream
+      - name: Run CI/CD Bot Upstream pr env
+        run: |
+          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream github --token ${{ secrets.GITHUB_TOKEN }} update-pr-environment
+      - name: Run CI/CD Bot Downstream test
         run: |
           sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
+      - name: Run CI/CD Bot Downstream pr env
+        run: |
+          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} update-pr-environment
