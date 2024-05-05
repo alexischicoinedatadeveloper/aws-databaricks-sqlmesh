@@ -9,7 +9,6 @@ WITH data AS (
   SELECT
     item_id::INT, /* pk */
     item_name::STRING,
-    item_description::STRING,
     price::DOUBLE,
     @start_ts::TIMESTAMP AS start_ts,
     @end_ts::TIMESTAMP AS end_ts
