@@ -8,3 +8,4 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/random/3.6.0/darw
 /sqlmesh_projects/downstream/.cache
 /sqlmesh_projects/upstream/.cache
 /sqlmesh_projects/seeds_for_local/.cache
+.idea/jupyter-settings.xml
