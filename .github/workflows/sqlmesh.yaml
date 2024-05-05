@@ -38,9 +38,11 @@ jobs:
       - name: Run CI/CD Bot Upstream pr env
         run: |
           sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream github --token ${{ secrets.GITHUB_TOKEN }} update-pr-environment
+        working-directory: ${{ github.workspace }}/sqlmesh/upstream
       - name: Run CI/CD Bot Downstream test
         run: |
           sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
       - name: Run CI/CD Bot Downstream pr env
         run: |
           sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} update-pr-environment
+        working-directory: ${{ github.workspace }}/sqlmesh/downstream
