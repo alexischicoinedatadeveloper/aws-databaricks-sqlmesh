@@ -7,7 +7,6 @@ terraform/.terraform/providers/registry.terraform.io/hashicorp/random/3.6.0/darw
 /sqlmesh/upstream/.cache
 /sqlmesh/upstream/logs
 *.pyc
-*.db
 *.wal
 /sqlmesh/downstream/.cache
 *.log

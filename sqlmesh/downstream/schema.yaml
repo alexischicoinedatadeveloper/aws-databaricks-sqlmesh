@@ -4,6 +4,8 @@
     item_name: STRING
     item_description: STRING
     price: DOUBLE
+    start_ts: TIMESTAMP
+    end_ts: TIMESTAMP
 - name: '`sales`.`bronze`.`transactions`'
   columns:
     transaction_id: INT
@@ -11,3 +13,5 @@
     quantity: INT
     transaction_date: STRING
     total_price: DOUBLE
+    start_ts: TIMESTAMP
+    end_ts: TIMESTAMP

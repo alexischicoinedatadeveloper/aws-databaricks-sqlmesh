@@ -9,6 +9,16 @@ gateways:
             type: duckdb
             catalogs:
                 upstream_state: state.db
+    combined:
+        connection:
+            type: duckdb
+            catalogs:
+                postgres_demo_sales_data: seeds_for_local/demo_data.db
+                sales: sales_combined.db
+        state_connection:
+            type: duckdb
+            catalogs:
+                upstream_state: state_combined.db
     db_notebook:
         connection:
             type: databricks
@@ -26,7 +36,7 @@ gateways:
             user: {{ env_var('POSTGRES_USER', 'a')}}
             password: {{ env_var('POSTGRES_PASSWORD', 'a')}}
 
-default_gateway: local
+default_gateway: combined
 
 model_defaults:
     dialect: databricks
