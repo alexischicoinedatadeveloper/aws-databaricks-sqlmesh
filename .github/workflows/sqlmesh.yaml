@@ -35,7 +35,7 @@ jobs:
       - name: Run CI/CD Bot Combined tests
         run: |
           sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
-      - name: Run CI/CD Bot Combined PR env
+      - name: Run CI/CD Bot Combined plan
         run: |
-          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} update-pr-environment
+          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} gen-prod-plan
         working-directory: ${{ github.workspace }}/sqlmesh/upstream
