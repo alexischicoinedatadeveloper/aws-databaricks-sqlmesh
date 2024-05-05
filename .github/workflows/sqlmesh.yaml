@@ -34,7 +34,7 @@ jobs:
         shell: bash
       - name: Run CI/CD Bot Upstream
         run: |
-          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream github --token ${{ secrets.GITHUB_TOKEN }} run-all
+          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
       - name: Run CI/CD Bot Downstream
         run: |
-          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} run-all
+          sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} run-tests
