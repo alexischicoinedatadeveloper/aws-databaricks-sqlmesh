@@ -38,8 +38,8 @@ jobs:
       - name: Run CI/CD Bot Combined external models
         run: |
           sqlmesh -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream create_external_models
-        working-directory: ${{ github.workspace }}/sqlmesh/upstream
+        working-directory: ${{ github.workspace }}/sqlmesh
       - name: Run CI/CD Bot Combined plan
         run: |
           sqlmesh_cicd -p ${{ github.workspace }}/sqlmesh/upstream -p ${{ github.workspace }}/sqlmesh/downstream github --token ${{ secrets.GITHUB_TOKEN }} gen-prod-plan
-        working-directory: ${{ github.workspace }}/sqlmesh/upstream
+        working-directory: ${{ github.workspace }}/sqlmesh
