@@ -5,5 +5,3 @@ terraform {
     }
   }
 }
-provider "postgresql" {
-}
