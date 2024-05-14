@@ -20,7 +20,7 @@ jobs:
         shell: bash
     env:
       TF_WORKING_DIR: terraform
-      TF_VAR_enable_nat_gateway_for_databricks_vpc: false
+      TF_VAR_enable_nat_gateway_for_databricks_vpc_and_public_rds: false
       TF_VAR_region: ${{ vars.REGION }}
       TF_VAR_databricks_account_id: ${{ secrets.DATABRICKS_ACCOUNT_ID }}
       TF_VAR_aws_access_key_id: ${{ secrets.TERRAFORM_USER_AWS_ACCESS_KEY }}

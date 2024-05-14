@@ -15,7 +15,7 @@ variable "aws_access_key_id" {}
 variable "aws_secret_access_key" {}
 variable "databricks_terraform_account_client_id" {}
 variable "databricks_terraform_account_secret" {}
-variable "enable_nat_gateway_for_databricks_vpc" {
+variable "enable_nat_gateway_for_databricks_vpc_and_public_rds" {
   default = false
   type    = bool
 }

@@ -87,6 +87,7 @@ resource "databricks_catalog" "sales" {
     databricks_mws_permission_assignment.add_admin_group,
     databricks_group.users
   ]
+  force_destroy = true
 }
 
 resource "databricks_grants" "sales_catalog_grants" {

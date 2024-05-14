@@ -10,7 +10,7 @@ resource "aws_db_instance" "postgres_for_databricks" {
   apply_immediately      = true
   vpc_security_group_ids = [var.security_group_id]
   skip_final_snapshot    = true
-  publicly_accessible    = true
+  publicly_accessible    = var.enable_nat_gateway_for_databricks_vpc_and_public_rds
   multi_az               = false
 }
 

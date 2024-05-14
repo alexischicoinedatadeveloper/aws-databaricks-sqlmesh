@@ -111,4 +111,8 @@ resource "random_password" "demo_data_password" {
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
+variable "enable_nat_gateway_for_databricks_vpc_and_public_rds" {
+  default = false
+  type    = bool
+}
 

@@ -34,17 +34,17 @@ provider "databricks" {
 
 
 module "databricks_account" {
-  source                                 = "./modules/databricks_account"
-  tags                                   = var.tags
-  cidr_block                             = var.cidr_block
-  region                                 = var.region
-  databricks_account_id                  = var.databricks_account_id
-  aws_access_key_id                      = var.aws_access_key_id
-  aws_secret_access_key                  = var.aws_secret_access_key
-  databricks_terraform_account_client_id = var.databricks_terraform_account_client_id
-  databricks_terraform_account_secret    = var.databricks_terraform_account_secret
-  enable_nat_gateway_for_databricks_vpc  = var.enable_nat_gateway_for_databricks_vpc
-  aws_account_id                         = var.aws_account_id
+  source                                               = "./modules/databricks_account"
+  tags                                                 = var.tags
+  cidr_block                                           = var.cidr_block
+  region                                               = var.region
+  databricks_account_id                                = var.databricks_account_id
+  aws_access_key_id                                    = var.aws_access_key_id
+  aws_secret_access_key                                = var.aws_secret_access_key
+  databricks_terraform_account_client_id               = var.databricks_terraform_account_client_id
+  databricks_terraform_account_secret                  = var.databricks_terraform_account_secret
+  enable_nat_gateway_for_databricks_vpc_and_public_rds = var.enable_nat_gateway_for_databricks_vpc_and_public_rds
+  aws_account_id                                       = var.aws_account_id
 
   providers = {
     aws            = aws
@@ -61,23 +61,24 @@ provider "databricks" {
 }
 
 module "databricks_workspace" {
-  depends_on                             = [module.databricks_account]
-  source                                 = "./modules/databricks_workspace"
-  host                                   = module.databricks_account.databricks_host
-  token                                  = module.databricks_account.databricks_token
-  metastore_id                           = module.databricks_account.metastore_id
-  databricks_account_id                  = var.databricks_account_id
-  databricks_terraform_account_client_id = var.databricks_terraform_account_client_id
-  databricks_terraform_account_secret    = var.databricks_terraform_account_secret
-  workspace_id                           = module.databricks_account.workspace_id
-  databricks_host                        = module.databricks_account.databricks_host
-  vpc_id                                 = module.databricks_account.vpc_id
-  subnet_id                              = module.databricks_account.subnet_id
-  security_group_id                      = module.databricks_account.security_group_id
-  subnet_group_name                      = module.databricks_account.subnet_group_name
-  github_user                            = var.github_user
-  github_token                           = var.github_token
-  workspace_repo_path                    = var.workspace_repo_path
+  depends_on                                           = [module.databricks_account]
+  source                                               = "./modules/databricks_workspace"
+  host                                                 = module.databricks_account.databricks_host
+  token                                                = module.databricks_account.databricks_token
+  metastore_id                                         = module.databricks_account.metastore_id
+  databricks_account_id                                = var.databricks_account_id
+  databricks_terraform_account_client_id               = var.databricks_terraform_account_client_id
+  databricks_terraform_account_secret                  = var.databricks_terraform_account_secret
+  workspace_id                                         = module.databricks_account.workspace_id
+  databricks_host                                      = module.databricks_account.databricks_host
+  vpc_id                                               = module.databricks_account.vpc_id
+  subnet_id                                            = module.databricks_account.subnet_id
+  security_group_id                                    = module.databricks_account.security_group_id
+  subnet_group_name                                    = module.databricks_account.subnet_group_name
+  github_user                                          = var.github_user
+  github_token                                         = var.github_token
+  workspace_repo_path                                  = var.workspace_repo_path
+  enable_nat_gateway_for_databricks_vpc_and_public_rds = var.enable_nat_gateway_for_databricks_vpc_and_public_rds
 
   providers = {
     databricks.workspace = databricks.workspace
