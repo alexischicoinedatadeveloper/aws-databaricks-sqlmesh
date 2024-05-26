@@ -1,10 +1,9 @@
-"""Generate sales data and populate a PostgreSQL database with it."""
-
 # Databricks notebook source
 # COMMAND
 # MAGIC %md
 # MAGIC # Install library for postgres
 # Install psycopg2 library to connect to PostgreSQL
+# COMMAND
 # MAGIC %pip install psycopg2-binary
 
 # COMMAND ----------
@@ -14,7 +13,10 @@ import psycopg2
 from databricks.sdk import WorkspaceClient
 
 # COMMAND ----------
-dbutils = WorkspaceClient.dbutils
+try:
+    dbutils  # type: ignore #pylint: disable=E0601
+except NameError:
+    dbutils = WorkspaceClient.dbutils
 
 # COMMAND ----------
 

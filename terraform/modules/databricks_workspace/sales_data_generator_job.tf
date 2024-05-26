@@ -69,4 +69,10 @@ resource "databricks_job" "sales_data_generator_job" {
     service_principal_name = databricks_service_principal.sales_data_generator_sp.application_id
   }
 
+  webhook_notifications {
+    on_success {
+      id = "39798de0-5411-4e45-97bb-293c79249041" # no terraform resource yet so was created manually
+    }
+  }
+
 }

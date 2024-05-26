@@ -9,7 +9,7 @@ resource "databricks_permissions" "repo_usage" {
   repo_id  = databricks_repo.this.id
 
   access_control {
-    permission_level       = "CAN_READ"
+    permission_level       = "CAN_RUN"
     service_principal_name = databricks_service_principal.sales_data_generator_sp.application_id
   }
   access_control {
