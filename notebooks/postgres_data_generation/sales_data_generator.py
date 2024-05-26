@@ -13,7 +13,10 @@ import psycopg2
 from databricks.sdk import WorkspaceClient
 
 # COMMAND ----------
-dbutils = WorkspaceClient().dbutils
+try:
+    dbutils  # type: ignore #pylint: disable=E0601
+except NameError:
+    dbutils = WorkspaceClient.dbutils
 
 # COMMAND ----------
 
