@@ -1,6 +1,5 @@
-"""Generate sales data and populate a PostgreSQL database with it."""
-
 # Databricks notebook source
+# """Generate sales data and populate a PostgreSQL database with it."""
 # COMMAND
 # MAGIC %md
 # MAGIC # Install library for postgres
