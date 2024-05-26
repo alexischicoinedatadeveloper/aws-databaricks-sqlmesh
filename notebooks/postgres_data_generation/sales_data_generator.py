@@ -1,9 +1,9 @@
 # Databricks notebook source
-# """Generate sales data and populate a PostgreSQL database with it."""
 # COMMAND
 # MAGIC %md
 # MAGIC # Install library for postgres
 # Install psycopg2 library to connect to PostgreSQL
+# COMMAND
 # MAGIC %pip install psycopg2-binary
 
 # COMMAND ----------
