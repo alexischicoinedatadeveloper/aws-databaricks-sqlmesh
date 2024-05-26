@@ -13,7 +13,7 @@ import psycopg2
 from databricks.sdk import WorkspaceClient
 
 # COMMAND ----------
-dbutils = WorkspaceClient.dbutils
+dbutils = WorkspaceClient().dbutils
 
 # COMMAND ----------
 
