@@ -1,6 +1,9 @@
-"""Run SQLMesh project in Databricks."""
-
 # Databricks notebook source
+# COMMAND ----------
+# MAGIC %md
+# Run SQLMesh project in Databricks.
+
+# COMMAND ----------
 import os
 
 # COMMAND ----------
