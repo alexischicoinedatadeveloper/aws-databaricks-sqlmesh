@@ -4,13 +4,15 @@
 # MAGIC # Run SQLMesh project in Databricks.
 
 # COMMAND ----------
+# MAGIC %pip install "sqlmesh[databricks]"
+
+# COMMAND ----------
 import os
 
 # COMMAND ----------
 from databricks.sdk import WorkspaceClient
 from sqlmesh import Context
 
-# MAGIC %pip install "sqlmesh[databricks]"
 
 dbutils = WorkspaceClient.dbutils
 
