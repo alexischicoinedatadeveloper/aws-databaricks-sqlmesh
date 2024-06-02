@@ -7,6 +7,12 @@
 # MAGIC %pip install "sqlmesh[databricks]"
 
 # COMMAND ----------
+from databricks.sdk import WorkspaceClient
+
+dbutils = WorkspaceClient().dbutils
+dbutils.library.restartPython()
+
+# COMMAND ----------
 import os
 
 # COMMAND ----------
