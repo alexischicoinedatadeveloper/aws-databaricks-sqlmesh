@@ -60,3 +60,22 @@ resource "databricks_secret" "postgres_port" {
   string_value = aws_db_instance.postgres_for_databricks.port
   scope        = databricks_secret_scope.postgres_secrets.id
 }
+
+resource "databricks_secret_scope" "serverless_secrets" {
+  provider = databricks.workspace
+  name     = "serverless_secrets"
+}
+
+resource "databricks_secret" "databricks_server_hostname" {
+  provider     = databricks.workspace
+  key          = "databricks_server_hostname"
+  string_value = databricks_sql_endpoint.small_serverless.odbc_params[0]["hostname"]
+  scope        = databricks_secret_scope.serverless_secrets.id
+}
+
+resource "databricks_secret" "databricks_http_path" {
+  provider     = databricks.workspace
+  key          = "databricks_http_path"
+  string_value = databricks_sql_endpoint.small_serverless.odbc_params[0]["path"]
+  scope        = databricks_secret_scope.serverless_secrets.id
+}

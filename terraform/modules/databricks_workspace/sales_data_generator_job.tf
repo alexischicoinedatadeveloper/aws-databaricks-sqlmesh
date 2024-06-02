@@ -38,28 +38,8 @@ resource "databricks_job" "sales_data_generator_job" {
     enabled = true
   }
 
-  job_cluster {
-    job_cluster_key = "j"
-    new_cluster {
-      runtime_engine   = "STANDARD" # don't need photon to run regular python code
-      num_workers      = 0
-      instance_pool_id = databricks_instance_pool.smallest_nodes.id
-      spark_version    = data.databricks_spark_version.latest_photon.id
-      spark_conf = {
-        # Single-node
-        "spark.databricks.cluster.profile" : "singleNode"
-        "spark.master" : "local[*]"
-      }
-
-      custom_tags = {
-        "ResourceClass" = "SingleNode"
-      }
-    }
-  }
-
   task {
     task_key        = "a"
-    job_cluster_key = "j"
 
     notebook_task {
       notebook_path = "${databricks_repo.this.path}/notebooks/postgres_data_generation/sales_data_generator"
