@@ -23,9 +23,9 @@ gateways:
             type: databricks
             catalog: sales
             concurrent_tasks: 4
-            access_token: {{ env_var('DATABRICKS_ACCESS_TOKEN' }}
-            server_hostname: {{ env_var('DATABRICKS_SERVER_HOSTNAME' }}
-            http_path: {{ env_var('DATABRICKS_HTTP_PATH' }}
+            access_token: {{ env_var('DATABRICKS_ACCESS_TOKEN') }}
+            server_hostname: {{ env_var('DATABRICKS_SERVER_HOSTNAME') }}
+            http_path: {{ env_var('DATABRICKS_HTTP_PATH') }}
         state_schema: sqlmesh_downstream
         state_connection:
             type: postgres
