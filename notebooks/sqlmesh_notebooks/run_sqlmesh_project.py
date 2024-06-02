@@ -13,8 +13,7 @@ import os
 from databricks.sdk import WorkspaceClient
 from sqlmesh import Context
 
-
-dbutils = WorkspaceClient.dbutils
+dbutils = WorkspaceClient().dbutils
 
 
 # COMMAND ----------
