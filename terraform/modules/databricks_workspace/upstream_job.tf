@@ -14,6 +14,13 @@ resource "databricks_secret_acl" "upstream_secret_acl" {
   scope      = databricks_secret_scope.postgres_secrets.name
 }
 
+resource "databricks_secret_acl" "upstream_secret_acl_serverless" {
+  provider   = databricks.workspace
+  principal  = databricks_service_principal.upstream_sp.application_id
+  permission = "READ"
+  scope      = databricks_secret_scope.serverless_secrets.name
+}
+
 resource "databricks_access_control_rule_set" "upstream_acl" {
   provider = databricks.mws
   name     = "accounts/${var.databricks_account_id}/servicePrincipals/${databricks_service_principal.upstream_sp.application_id}/ruleSets/default"
@@ -33,31 +40,9 @@ resource "databricks_job" "upstream_job" {
     enabled = true
   }
 
-  job_cluster {
-    job_cluster_key = "j"
-    new_cluster {
-      data_security_mode = "SINGLE_USER"
-      runtime_engine     = "PHOTON"
-      num_workers        = 0
-      instance_pool_id   = databricks_instance_pool.smallest_nodes.id
-      spark_version      = data.databricks_spark_version.latest_photon.id
-      spark_conf = {
-        # Single-node
-        "spark.databricks.cluster.profile" : "singleNode"
-        "spark.master" : "local[*]"
-        "spark.sql.parquet.compression.codec" : "zstd"
-        "parquet.compression.codec.zstd.level" : "1"
-      }
-
-      custom_tags = {
-        "ResourceClass" = "SingleNode"
-      }
-    }
-  }
 
   task {
     task_key        = "a"
-    job_cluster_key = "j"
 
     notebook_task {
       notebook_path = "${databricks_repo.this.path}/notebooks/sqlmesh_notebooks/run_sqlmesh_project"
