@@ -34,19 +34,13 @@
 from pyspark.sql.functions import current_timestamp, expr, count, date_trunc, sum
 
 # Create the streaming DataFrame
-streaming_df = spark.readStream.table("stream_chain_demo.stream.my_table")
+streaming_df = spark.readStream.table("stream_chain_demo.stream.my_table")  # type: ignore[name-defined]
 
 # Add event_date column from current date
-streaming_df = streaming_df.withColumn(
-    "event_date", date_trunc("minute", current_timestamp())
-)
+streaming_df = streaming_df.withColumn("event_date", date_trunc("minute", current_timestamp()))
 
 # Aggregate by a and event_date
-aggregated_df = (
-    streaming_df
-    .groupBy("a", "event_date")
-    .agg(sum("b").alias("b"))
-)
+aggregated_df = streaming_df.groupBy("a", "event_date").agg(sum("b").alias("b"))
 
 
 # Write the aggregated DataFrame to the downstream table
@@ -70,22 +64,13 @@ query = (
 from pyspark.sql.functions import current_timestamp, expr, count, date_trunc
 
 # Create the streaming DataFrame
-streaming_df = spark.readStream.table(
-    "stream_chain_demo.stream.my_table_downstream_complete"
-)
+streaming_df = spark.readStream.table("stream_chain_demo.stream.my_table_downstream_complete")  # type: ignore[name-defined]
 
 # Add event_date column from current date
-streaming_df = streaming_df.withColumn(
-    "event_date", date_trunc("hour", current_timestamp())
-)
+streaming_df = streaming_df.withColumn("event_date", date_trunc("hour", current_timestamp()))
 
 # Aggregate by a and event_date
-aggregated_df = (
-    streaming_df
-    .groupBy("a", "event_date")
-    .agg(count("b").alias("b"))
-    .withColumn("something", expr("2"))
-)
+aggregated_df = streaming_df.groupBy("a", "event_date").agg(count("b").alias("b")).withColumn("something", expr("2"))
 
 
 # Write the aggregated DataFrame to the downstream table
@@ -109,22 +94,15 @@ query = (
 from pyspark.sql.functions import current_timestamp, expr, count, date_trunc
 
 # Create the streaming DataFrame
-streaming_df = spark.readStream.option("skipChangeCommits", "true").table(
+streaming_df = spark.readStream.option("skipChangeCommits", "true").table(  # type: ignore[name-defined]
     "stream_chain_demo.stream.my_table_downstream_complete"
 )
 
 # Add event_date column from current date
-streaming_df = streaming_df.withColumn(
-    "event_date", date_trunc("hour", current_timestamp())
-)
+streaming_df = streaming_df.withColumn("event_date", date_trunc("hour", current_timestamp()))
 
 # Aggregate by a and event_date
-aggregated_df = (
-    streaming_df
-    .groupBy("a", "event_date")
-    .agg(count("b").alias("b"))
-    .withColumn("something", expr("2"))
-)
+aggregated_df = streaming_df.groupBy("a", "event_date").agg(count("b").alias("b")).withColumn("something", expr("2"))
 
 
 # Write the aggregated DataFrame to the downstream table
@@ -148,20 +126,16 @@ query = (
 from pyspark.sql.functions import current_timestamp, expr, count, date_trunc
 
 # Create the streaming DataFrame
-streaming_df = spark.readStream.option("skipChangeCommits", "true").table(
-    "stream_chain_demo.stream.my_table"
-)
+streaming_df = spark.readStream.option("skipChangeCommits", "true").table("stream_chain_demo.stream.my_table")  # type: ignore[name-defined]
 
 # Add event_date column from current date
-streaming_df = streaming_df.withColumn(
-    "event_date", date_trunc("second", current_timestamp())
-).na.fill({"event_date": "2024-01-01"})
+streaming_df = streaming_df.withColumn("event_date", date_trunc("second", current_timestamp())).na.fill(
+    {"event_date": "2024-01-01"}
+)
 
 # Aggregate by a and event_date
 aggregated_df = (
-    streaming_df.withWatermark("event_date", "1 second")
-    .groupBy("a", "event_date")
-    .agg(count("b").alias("b"))
+    streaming_df.withWatermark("event_date", "1 second").groupBy("a", "event_date").agg(count("b").alias("b"))
 )
 
 
@@ -215,20 +189,18 @@ query = (
 from pyspark.sql.functions import current_timestamp, expr, sum, date_trunc
 
 # Create the streaming DataFrame
-streaming_df = spark.readStream.option("skipChangeCommits", "true").table(
+streaming_df = spark.readStream.option("skipChangeCommits", "true").table(  # type: ignore[name-defined]
     "stream_chain_demo.stream.my_table_downstream_append"
 )
 
 # Add event_date column from current date
-streaming_df = streaming_df.withColumn(
-    "event_date", date_trunc("hour", current_timestamp())
-).na.fill({"event_date": "2024-01-01"})
+streaming_df = streaming_df.withColumn("event_date", date_trunc("hour", current_timestamp())).na.fill(
+    {"event_date": "2024-01-01"}
+)
 
 # Aggregate by a and event_date
 aggregated_df = (
-    streaming_df.withWatermark("event_date", "60 second")
-    .groupBy("a", "event_date")
-    .agg(sum("b").alias("b"))
+    streaming_df.withWatermark("event_date", "60 second").groupBy("a", "event_date").agg(sum("b").alias("b"))
 )
 
 
@@ -244,5 +216,3 @@ query = (
 )
 
 # COMMAND ----------
-
-

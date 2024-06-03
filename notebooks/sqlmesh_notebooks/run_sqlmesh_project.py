@@ -13,11 +13,11 @@ dbutils = WorkspaceClient().dbutils
 dbutils.library.restartPython()
 
 # COMMAND ----------
-import os
+import os  # pylint: disable=wrong-import-position, wrong-import-order
 
 # COMMAND ----------
-from databricks.sdk import WorkspaceClient
-from sqlmesh import Context
+from databricks.sdk import WorkspaceClient  # pylint: disable=reimported, wrong-import-position
+from sqlmesh import Context  # pylint: disable=wrong-import-position
 
 dbutils = WorkspaceClient().dbutils
 
@@ -38,7 +38,11 @@ os.environ["POSTGRES_PASSWORD"] = dbutils.secrets.get(POSTGRES_SCOPE, "sqlmesh_s
 
 SERVERLESS_SCOPE = "serverless_secrets"
 os.environ["DATABRICKS_ACCESS_TOKEN"] = (
-    dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().getOrElse(None)
+    dbutils.notebook.entry_point.getDbutils()  # pylint: disable=internal-api
+    .notebook()
+    .getContext()
+    .apiToken()
+    .getOrElse(None)
 )
 os.environ["DATABRICKS_SERVER_HOSTNAME"] = dbutils.secrets.get(SERVERLESS_SCOPE, "databricks_server_hostname")
 os.environ["DATABRICKS_HTTP_PATH"] = dbutils.secrets.get(SERVERLESS_SCOPE, "databricks_http_path")
